@@ -1,5 +1,5 @@
 $(function() {
-  // Button will be disabled until we type anything inside the input field
+  // Button will be disabled until the user types anything inside the input field
   const source = document.getElementById('autoComplete');
   const inputHandler = function(e) {
     if(e.target.value==""){
@@ -12,7 +12,7 @@ $(function() {
   source.addEventListener('input', inputHandler);
 
   $('.movie-button').on('click',function(){
-    var my_api_key = 'YOUR_API_KEY';
+    var my_api_key = '21aabc46c35aa77b1244f9143f623494';
     var title = $('.movie').val();
     if (title=="") {
       $('.results').css('display','none');
@@ -24,26 +24,29 @@ $(function() {
   });
 });
 
-// will be invoked when clicking on the recommended movies
-function recommendcard(e){
-  var my_api_key = 'YOUR_API_KEY';
+//This will be invoked when clicking on the recommended movies
+function recommendMovie(e){
+  var my_api_key = '21aabc46c35aa77b1244f9143f623494';
   var title = e.getAttribute('title'); 
   load_details(my_api_key,title);
 }
 
-// get the basic details of the movie from the API (based on the name of the movie)
+// Using Ajax I get the basic details of the movie from the API (based on the name of the movie)
 function load_details(my_api_key,title){
   $.ajax({
     type: 'GET',
     url:'https://api.themoviedb.org/3/search/movie?api_key='+my_api_key+'&query='+title,
 
+    // If the movie from the API is successfully loaded
     success: function(movie){
+      //If the result of the dataset is empty
       if(movie.results.length<1){
         $('.fail').css('display','block');
         $('.results').css('display','none');
         $("#loader").delay(500).fadeOut();
       }
       else{
+        //If there are more than 1 record show the loader icon to fade in
         $("#loader").fadeIn();
         $('.fail').css('display','none');
         $('.results').delay(1000).css('display','block');
@@ -59,7 +62,7 @@ function load_details(my_api_key,title){
   });
 }
 
-// passing the movie name to get the similar movies from python's flask
+// Passing the movie name to get the similar movies from python's flask
 function movie_recs(movie_title,movie_id,my_api_key){
   $.ajax({
     type:'POST',
@@ -88,7 +91,7 @@ function movie_recs(movie_title,movie_id,my_api_key){
     },
   }); 
 }
-
+//With help of this Source: https://www.yogihosting.com/implement-tmdb-api-with-jquery-ajax/
 // get all the details of the movie using the movie id.
 function get_movie_details(movie_id,my_api_key,arr,movie_title) {
   $.ajax({
@@ -153,7 +156,7 @@ function show_details(movie_details,arr,movie_title,my_api_key,movie_id){
       'rec_movies':JSON.stringify(arr),
       'rec_posters':JSON.stringify(arr_poster),
   }
-
+//With help of this Source: https://www.yogihosting.com/implement-tmdb-api-with-jquery-ajax/
   $.ajax({
     type:'POST',
     data:details,
@@ -196,17 +199,21 @@ function get_movie_cast(movie_id,my_api_key){
     cast_names = [];
     cast_chars = [];
     cast_profiles = [];
-
+//With help of this Source: https://select2.org/data-sources/ajax
+//Maximum amount of cast present on the website is 10
     top_10 = [0,1,2,3,4,5,6,7,8,9];
     $.ajax({
       type:'GET',
       url:"https://api.themoviedb.org/3/movie/"+movie_id+"/credits?api_key="+my_api_key,
       async:false,
       success: function(my_movie){
+        //If there are more than 10 cast in a movie
         if(my_movie.cast.length>=10){
+          //Just Retrieve data from 10 casts max
           top_cast = [0,1,2,3,4,5,6,7,8,9];
         }
         else {
+          //Else retrieve a maximum of 5 casts
           top_cast = [0,1,2,3,4];
         }
         for(var my_cast in top_cast){

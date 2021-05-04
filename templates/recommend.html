@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>NEW</title>
+	<title>Search Results</title>
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,6 +23,7 @@
 <body id="content">
 	<div class="results">
 	    <center>
+        	<!-- Title of Search or Recommended Movie -->
 	      <h2 id="name" class="text-uppercase">{{title}}</h2>
 	    </center>
 	</div>
@@ -36,6 +37,7 @@
       <div class="poster-sm text-center">
         <img class="poster" style="border-radius: 40px;margin-bottom: 5%;" height="400" width="250" src={{poster}}>
       </div>
+      	<!-- Detail of the Movie Searched by the user or Recommended to the user -->
       <div id="details">
         <br/>
         <h6 id="title" style="color:white;">TITLE: &nbsp;{{title}}</h6>
@@ -49,12 +51,14 @@
     </div>
 </div>
 <br/>
-	
+
+<!-- Inputting the data from the API into the Modal Box -->
 {% for name, details in cast_details.items() if not cast_details.hidden %}
   <div class="modal fade" id="{{details[0]}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="background-color: #e50914;color: white;">
+        <div class="modal-header" style="background: rgb(238,174,202);
+        background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);">
           <h5 class="modal-title" id="exampleModalLabel3">{{name}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" style="color: white">&times;</span>
@@ -81,13 +85,14 @@
   {% endfor %}
   
   {% if casts|length > 1 %}
+  <!-- Showing all the cast presented on the movie -->
   <div class="movie" style="color: #E8E8E8;">
     	<center>
 		<h3>TOP CAST</h3>
 		<h5>(Click on the cast to know more)</h5>
 	</center>
   </div>
-
+<!-- Retriving the neccessary images and names for each actor present in the movie using the API and web scraping -->
   <div class="movie-content">
         {% for name, details in casts.items() if not casts.hidden %}
           <div class="castcard card" style="width: 15rem;" title="Click to know more about {{name}}" data-toggle="modal" data-target="#{{details[0]}}">
@@ -107,12 +112,14 @@
 {% endif %}
 
   <center>
+    <!-- Validating the reviews of the movie -->
     {% if reviews %}
-    <h2 style="color:white">USER REVIEWS</h2>
+    <h2 style="color:white; background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);">USER REVIEWS</h2>
      <div class="col-md-12" style="margin: 0 auto; margin-top:25px;">
         <table class="table table-bordered" bordercolor="white" style="color:white">
             <thead>
-                <tr>
+                <tr style="background-color:#04478585;">
                     <th class="text-center" scope="col" style="width: 75%">Comments</th>
                     <th class="text-center" scope="col">Sentiments</th>
                 </tr>
@@ -120,10 +127,11 @@
     
             <tbody>
 		      {% for review, status in reviews.items() if not reviews.hidden %}
-		      <tr style="background-color:#e5091485;">
+		      <tr style="background-color:#0084ff85;">
               	  <td>{{review}}</td>
 	              <td><center>
 	                  {{status}} : 
+                    <!-- When the Retrieved Sentinel is retrieved as good assign appropiate icons -->
 	                  {% if status =='Good' %}
 	                    &#128515;
 	                  {% else %}
@@ -137,12 +145,13 @@
  		 </table>
     </div>
     {% else %}
+    <!-- If the searched user is not in the dataset I validate the search query from the user -->
     <div style="color:white;">
       <h1 style="color:white"> This movie is not released yet. Stay tuned! </h1>
     </div>
     {% endif %}
   </center>
-
+<!-- Recommended movies for the user based on the searched movie -->
       {% if movie_cards|length > 1 %}
 
 
@@ -152,7 +161,8 @@
 
     <div class="movie-content">
       {% for poster, title in movie_cards.items() if not movie_cards.hidden %}
-        <div class="card" style="width: 15rem;" title="{{title}}" onclick="recommendcard(this)">
+      <!-- When the user Clicks on a movie From this section that movie will be fed back to the search query and present that movie with its new set of reccomendations -->
+        <div class="card" style="width: 15rem;" title="{{title}}" onclick="recommendMovie(this)">
           <div class="imghvr">
             <img class="card-img-top" height="360" width="240" alt="{{title}} - poster" src={{poster}}>
             <figcaption class="fig">

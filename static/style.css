@@ -1,4 +1,6 @@
 .movie {
+	background: rgb(238,174,202);
+	background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 	color: #fff;
 	margin-left: auto;
 	margin-right: auto;
@@ -30,7 +32,12 @@
 }
 
 #details {
+	background: rgb(116,116,116);
+	background: linear-gradient(90deg, rgba(116,116,116,1) 0%, rgba(12,109,161,1) 50%, rgba(116,116,116,1) 100%);
 	margin-left: 50px;
+	margin-right: 50px;
+	padding: 10px;
+	border-radius: 10%;
 }
 
 .footer {
@@ -44,7 +51,7 @@
 
 h1 {
     font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #e50914;
+    color: #00fff2;
     font-weight: bold;
     margin-top: 30px;
     text-shadow: #000000 0px 0px 13px;
@@ -76,7 +83,10 @@ h1 {
 }
 
 #name {
+	background: rgb(238,174,202);
+	background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 	color: white;
+	border-radius: 20px;
 	padding: 1px;
 }
 
